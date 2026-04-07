@@ -1,0 +1,199 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  background: transparent;
+  user-select: none;
+  -webkit-app-region: no-drag;
+  overflow: hidden;
+}
+
+.calendar {
+  background: #2a2a2a;
+  border-radius: 12px;
+  padding: 16px 16px 12px;
+  width: 340px;
+  margin: 5px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Header ── */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.month-year {
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.month-year:hover {
+  opacity: 0.8;
+}
+
+.month {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.year {
+  font-size: 26px;
+  font-weight: 700;
+  color: #d94040;
+  letter-spacing: -0.3px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: #5a9bef;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-btn:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Day Headers ── */
+.day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+}
+
+.day-header {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 0;
+}
+
+.day-header.today-weekday {
+  color: #d94040;
+}
+
+.day-header.weekend {
+  color: #666;
+}
+
+.day-header.today-weekday.weekend {
+  color: #d94040;
+}
+
+/* ── Date Grid ── */
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.date-cell {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: #e0e0e0;
+  padding: 6px 0;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+}
+
+.date-cell .date-number {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s;
+  position: relative;
+  z-index: 1;
+}
+
+.date-cell:hover .date-number {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.date-cell.other-month {
+  color: #555;
+}
+
+.date-cell.other-month:hover .date-number {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.date-cell.weekend {
+  color: #999;
+}
+
+.date-cell.other-month.weekend {
+  color: #4a4a4a;
+}
+
+.date-cell.today .date-number {
+  background: #3a8cef;
+  color: #fff;
+  font-weight: 600;
+}
+
+.date-cell.today:hover .date-number {
+  background: #4a96f5;
+}
+
+.date-cell.selected .date-number {
+  background: rgba(58, 140, 239, 0.25);
+  color: #7ab8ff;
+}
+
+.date-cell.selected.today .date-number {
+  background: #3a8cef;
+  color: #fff;
+}
+
+/* ── Current Week Highlight ── */
+.date-cell.current-week {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.date-cell.current-week:first-of-type,
+.date-cell.current-week-start {
+  border-radius: 6px 0 0 6px;
+}
+
+.date-cell.current-week-end {
+  border-radius: 0 6px 6px 0;
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Light Calendar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="calendar">
+    <header class="calendar-header">
+      <div class="month-year" id="monthYear" title="Click to return to today">
+        <span class="month" id="monthName"></span>
+        <span class="year" id="yearNumber"></span>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevMonth" aria-label="Previous month">‹</button>
+        <button class="nav-btn" id="nextMonth" aria-label="Next month">›</button>
+      </div>
+    </header>
+    <div class="day-headers" id="dayHeaders"></div>
+    <div class="date-grid" id="dateGrid"></div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>

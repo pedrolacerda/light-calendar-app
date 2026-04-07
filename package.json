@@ -1,0 +1,22 @@
+{
+  "name": "light-calendar-app",
+  "version": "1.0.0",
+  "description": "Lightweight macOS menu bar calendar app",
+  "main": "main.js",
+  "scripts": {
+    "start": "unset ELECTRON_RUN_AS_NODE && electron .",
+    "build": "electron-builder --mac"
+  },
+  "keywords": [
+    "calendar",
+    "menubar",
+    "macos",
+    "electron"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^33.4.0"
+  }
+}
