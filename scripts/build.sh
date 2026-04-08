@@ -8,6 +8,7 @@ set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BUILD_DIR=$(mktemp -d -t light-calendar-build)
+APP_NAME="Light Calendar.app"
 
 cleanup() {
   rm -rf "$BUILD_DIR"
@@ -31,12 +32,18 @@ echo "→ Building with electron-builder ..."
 unset ELECTRON_RUN_AS_NODE 2>/dev/null || true
 npx electron-builder --mac
 
+APP_BUNDLE_REL=$(find dist -maxdepth 2 -type d -name "$APP_NAME" -print -quit)
+if [[ -z "$APP_BUNDLE_REL" ]]; then
+  echo "Built app bundle not found in dist/" >&2
+  exit 1
+fi
+
 # Build DMG if --dmg flag is passed
 if [[ "${1:-}" == "--dmg" ]]; then
   echo "→ Creating DMG installer ..."
   hdiutil create \
     -volname "Light Calendar" \
-    -srcfolder "dist/mac-arm64/Light Calendar.app" \
+    -srcfolder "$APP_BUNDLE_REL" \
     -ov -format UDZO \
     "dist/Light Calendar.dmg"
 fi
@@ -49,4 +56,10 @@ echo ""
 echo "✅ Build complete! Artifacts in dist/:"
 ls -lh "$PROJECT_DIR/dist/"*.zip "$PROJECT_DIR/dist/"*.dmg 2>/dev/null || true
 echo ""
-echo "   App bundle: dist/mac-arm64/Light Calendar.app"
+APP_BUNDLE_PATH=$(find "$PROJECT_DIR/dist" -maxdepth 2 -type d -name "$APP_NAME" -print -quit)
+if [[ -z "$APP_BUNDLE_PATH" ]]; then
+  echo "Copied app bundle not found in $PROJECT_DIR/dist" >&2
+  exit 1
+fi
+
+echo "   App bundle: ${APP_BUNDLE_PATH#$PROJECT_DIR/}"

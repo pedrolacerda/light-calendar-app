@@ -28,6 +28,8 @@ npm install
 bash scripts/install-hooks.sh
 ```
 
+The local `post-commit` hook rebuilds the app in the background and replaces `/Applications/Light Calendar.app` with the latest build.
+
 ### Run
 
 ```bash
