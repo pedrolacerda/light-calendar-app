@@ -1,18 +1,17 @@
-const { app, BrowserWindow, Menu, Tray, nativeTheme } = require('electron');
+const { app, BrowserWindow, Menu, Tray, nativeTheme, ipcMain } = require('electron');
 const path = require('path');
 
 const isDev = process.env.ELECTRON_IS_DEV === '1';
 let tray = null;
 let win = null;
 let isQuitting = false;
+let currentTheme = 'dark';
 
 app.on('before-quit', () => {
   isQuitting = true;
 });
 
 app.on('ready', () => {
-  nativeTheme.themeSource = 'dark';
-
   // Hide dock icon on macOS
   if (process.platform === 'darwin') {
     app.dock.hide();
@@ -26,7 +25,7 @@ app.on('ready', () => {
   // Create hidden browser window
   win = new BrowserWindow({
     width: 360,
-    height: 345,
+    height: 380,
     show: false,
     frame: false,
     resizable: false,
@@ -39,6 +38,7 @@ app.on('ready', () => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
@@ -47,6 +47,24 @@ app.on('ready', () => {
   if (isDev) {
     win.webContents.openDevTools({ mode: 'detach' });
   }
+
+  // Track theme from renderer
+  ipcMain.on('theme-updated', (_e, theme) => {
+    currentTheme = theme;
+    nativeTheme.themeSource = theme;
+  });
+
+  // Resize window when view changes
+  const VIEW_SIZES = {
+    week:  { width: 360, height: 215 },
+    month: { width: 360, height: 380 },
+    year:  { width: 360, height: 460 },
+  };
+  ipcMain.on('view-changed', (_e, view) => {
+    const size = VIEW_SIZES[view] || VIEW_SIZES.month;
+    win.setSize(size.width, size.height);
+    positionWindow();
+  });
 
   // Hide instead of close
   win.on('close', (e) => {
@@ -78,6 +96,32 @@ app.on('ready', () => {
     {
       label: win.isVisible() ? 'Hide Calendar' : 'Open Calendar',
       click: toggleWindow,
+    },
+    { type: 'separator' },
+    {
+      label: 'Theme',
+      submenu: [
+        {
+          label: 'Dark',
+          type: 'radio',
+          checked: currentTheme === 'dark',
+          click: () => {
+            currentTheme = 'dark';
+            nativeTheme.themeSource = 'dark';
+            win.webContents.send('set-theme', 'dark');
+          },
+        },
+        {
+          label: 'Light',
+          type: 'radio',
+          checked: currentTheme === 'light',
+          click: () => {
+            currentTheme = 'light';
+            nativeTheme.themeSource = 'light';
+            win.webContents.send('set-theme', 'light');
+          },
+        },
+      ],
     },
     { type: 'separator' },
     {

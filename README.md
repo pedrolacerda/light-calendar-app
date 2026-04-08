@@ -7,9 +7,9 @@ A lightweight macOS menu bar calendar app built with Electron. Click the tray ic
 ## Features
 
 - **Menu bar native** — lives in the macOS tray, no Dock icon
-- **Dark theme** — matches macOS dark mode aesthetics
+- **Week / Month / Year views** — switch views with the segmented control; ‹/› navigation adapts to each view
+- **Light & Dark themes** — toggle with the ☀︎/☽ button or via the tray right-click menu; preference is remembered
 - **Today at a glance** — current date highlighted with a blue circle, current week row subtly emphasized
-- **Month navigation** — browse months with ‹ / › arrows
 - **Quick return** — click the month/year header to jump back to today
 - **Click to select** — tap any date to highlight it
 - **Easy exit** — right-click the tray icon and choose **Quit Light Calendar**
@@ -25,6 +25,7 @@ A lightweight macOS menu bar calendar app built with Electron. Click the tray ic
 
 ```bash
 npm install
+bash scripts/install-hooks.sh
 ```
 
 ### Run
