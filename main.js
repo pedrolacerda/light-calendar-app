@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Tray, nativeImage, nativeTheme, screen } = require('electron');
 const path = require('path');
 
+const isDev = process.env.ELECTRON_IS_DEV === '1';
 let tray = null;
 let win = null;
 
@@ -38,16 +39,22 @@ app.on('ready', () => {
 
   win.loadFile('index.html');
 
+  if (isDev) {
+    win.webContents.openDevTools({ mode: 'detach' });
+  }
+
   // Hide instead of close
   win.on('close', (e) => {
     e.preventDefault();
     win.hide();
   });
 
-  // Hide when clicking outside
-  win.on('blur', () => {
-    win.hide();
-  });
+  // Hide when clicking outside (disabled in dev mode to keep DevTools usable)
+  if (!isDev) {
+    win.on('blur', () => {
+      win.hide();
+    });
+  }
 
   // Toggle window on tray click
   tray.on('click', () => {
