@@ -25,6 +25,7 @@ A lightweight macOS menu bar calendar app built with Electron. Click the tray ic
 
 ```bash
 npm install
+bash scripts/install-hooks.sh
 ```
 
 ### Run
