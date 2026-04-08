@@ -18,10 +18,45 @@ function getToday() {
   };
 }
 
+/* ── Theme Management ── */
+
+function getTheme() {
+  return localStorage.getItem('theme') || 'dark';
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) {
+    // Show sun in dark mode (click to go light), moon in light mode (click to go dark)
+    toggle.textContent = theme === 'dark' ? '☀︎' : '☽';
+  }
+  localStorage.setItem('theme', theme);
+  // Notify main process so tray menu stays in sync
+  if (window.themeAPI) {
+    window.themeAPI.notifyTheme(theme);
+  }
+}
+
+function toggleTheme() {
+  const next = getTheme() === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+}
+
 function init() {
   const t = getToday();
   currentMonth = t.month;
   currentYear = t.year;
+
+  // Apply saved theme
+  applyTheme(getTheme());
+
+  // Listen for theme changes from tray menu
+  if (window.themeAPI) {
+    window.themeAPI.onSetTheme((theme) => {
+      applyTheme(theme);
+    });
+  }
 
   renderDayHeaders();
   renderCalendar();
@@ -177,6 +212,9 @@ function bindEvents() {
     selectedDate = null;
     renderCalendar();
   });
+
+  // Theme toggle
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 }
 
 document.addEventListener('DOMContentLoaded', init);

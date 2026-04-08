@@ -7,7 +7,7 @@ A lightweight macOS menu bar calendar app built with Electron. Click the tray ic
 ## Features
 
 - **Menu bar native** — lives in the macOS tray, no Dock icon
-- **Dark theme** — matches macOS dark mode aesthetics
+- **Light & Dark themes** — toggle with the ☀︎/☽ button or via the tray right-click menu; preference is remembered
 - **Today at a glance** — current date highlighted with a blue circle, current week row subtly emphasized
 - **Month navigation** — browse months with ‹ / › arrows
 - **Quick return** — click the month/year header to jump back to today
