@@ -83,6 +83,17 @@ This builds the app and wraps it in a `.dmg` disk image at `dist/Light Calendar.
 3. Launch it — the calendar icon appears in the menu bar
 4. The app has `LSUIElement` set, so it never shows in the Dock
 
+### CI / Releases
+
+A GitHub Actions pipeline builds both **x64** and **arm64** installers automatically when you push a version tag:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+This creates a GitHub Release with `.zip` and `.dmg` artifacts for both architectures.
+
 ## How It Works
 
 The app uses Electron's native `Tray` API to place a calendar icon in the macOS menu bar. Left-clicking it toggles a frameless, transparent `BrowserWindow` positioned directly below the icon, and right-clicking opens a small menu with a **Quit** option. The calendar is rendered with vanilla JS — no framework needed for this scope.
