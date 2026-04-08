@@ -18,6 +18,38 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^33.4.0"
+    "electron": "^33.4.0",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.lightcalendar.app",
+    "productName": "Light Calendar",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "assets/icon.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "extendInfo": {
+        "LSUIElement": true
+      }
+    },
+    "dmg": {
+      "title": "Light Calendar",
+      "iconSize": 80,
+      "contents": [
+        { "x": 130, "y": 220 },
+        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+      ]
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "renderer.js",
+      "styles.css",
+      "assets/tray-iconTemplate.png",
+      "assets/tray-iconTemplate@2x.png"
+    ]
   }
 }

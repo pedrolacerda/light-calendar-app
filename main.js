@@ -1,9 +1,14 @@
-const { app, BrowserWindow, Tray, nativeImage, nativeTheme, screen } = require('electron');
+const { app, BrowserWindow, Menu, Tray, nativeTheme } = require('electron');
 const path = require('path');
 
 const isDev = process.env.ELECTRON_IS_DEV === '1';
 let tray = null;
 let win = null;
+let isQuitting = false;
+
+app.on('before-quit', () => {
+  isQuitting = true;
+});
 
 app.on('ready', () => {
   nativeTheme.themeSource = 'dark';
@@ -45,6 +50,10 @@ app.on('ready', () => {
 
   // Hide instead of close
   win.on('close', (e) => {
+    if (isQuitting) {
+      return;
+    }
+
     e.preventDefault();
     win.hide();
   });
@@ -56,14 +65,35 @@ app.on('ready', () => {
     });
   }
 
-  // Toggle window on tray click
-  tray.on('click', () => {
+  const toggleWindow = () => {
     if (win.isVisible()) {
       win.hide();
     } else {
       positionWindow();
       win.show();
     }
+  };
+
+  const buildContextMenu = () => Menu.buildFromTemplate([
+    {
+      label: win.isVisible() ? 'Hide Calendar' : 'Open Calendar',
+      click: toggleWindow,
+    },
+    { type: 'separator' },
+    {
+      label: 'Quit Light Calendar',
+      accelerator: 'Command+Q',
+      click: () => {
+        isQuitting = true;
+        app.quit();
+      },
+    },
+  ]);
+
+  // Left click toggles the popup, right click shows a menu with Quit.
+  tray.on('click', toggleWindow);
+  tray.on('right-click', () => {
+    tray.popUpContextMenu(buildContextMenu());
   });
 
   console.log('Light Calendar is ready');
@@ -83,4 +113,3 @@ function positionWindow() {
 app.on('window-all-closed', () => {
   // Don't quit — the app lives in the tray
 });
-

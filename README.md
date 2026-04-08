@@ -12,6 +12,7 @@ A lightweight macOS menu bar calendar app built with Electron. Click the tray ic
 - **Month navigation** — browse months with ‹ / › arrows
 - **Quick return** — click the month/year header to jump back to today
 - **Click to select** — tap any date to highlight it
+- **Easy exit** — right-click the tray icon and choose **Quit Light Calendar**
 - **Auto-refresh** — today's highlight updates automatically at midnight
 
 ## Getting Started
@@ -55,7 +56,7 @@ light-calendar-app/
 
 ## How It Works
 
-The app uses Electron's native `Tray` API to place a calendar icon in the macOS menu bar. Clicking it toggles a frameless, transparent `BrowserWindow` positioned directly below the icon. The calendar is rendered with vanilla JS — no framework needed for this scope.
+The app uses Electron's native `Tray` API to place a calendar icon in the macOS menu bar. Left-clicking it toggles a frameless, transparent `BrowserWindow` positioned directly below the icon, and right-clicking opens a small menu with a **Quit** option. The calendar is rendered with vanilla JS — no framework needed for this scope.
 
 ## License
 
