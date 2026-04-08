@@ -23,6 +23,21 @@
   --selected-bg: rgba(58, 140, 239, 0.25);
   --selected-color: #7ab8ff;
   --week-bg: rgba(255, 255, 255, 0.035);
+  --view-switcher-bg: rgba(255, 255, 255, 0.06);
+  --view-btn-hover: rgba(255, 255, 255, 0.08);
+  --view-btn-active-bg: rgba(255, 255, 255, 0.15);
+  --view-btn-active-color: #fff;
+  --week-day-name: #888;
+  --week-day-name-today: #d94040;
+  --week-day-name-weekend: #666;
+  --mini-month-name: #bbb;
+  --mini-month-current: #d94040;
+  --mini-header: #666;
+  --mini-date: #aaa;
+  --mini-weekend: #666;
+  --mini-today-bg: #3a8cef;
+  --mini-today-color: #fff;
+  --mini-hover: rgba(255, 255, 255, 0.04);
 }
 
 [data-theme="light"] {
@@ -49,6 +64,21 @@
   --selected-bg: rgba(41, 121, 230, 0.12);
   --selected-color: #1a65c7;
   --week-bg: rgba(0, 0, 0, 0.03);
+  --view-switcher-bg: rgba(0, 0, 0, 0.04);
+  --view-btn-hover: rgba(0, 0, 0, 0.05);
+  --view-btn-active-bg: rgba(0, 0, 0, 0.1);
+  --view-btn-active-color: #1a1a1a;
+  --week-day-name: #999;
+  --week-day-name-today: #d94040;
+  --week-day-name-weekend: #bbb;
+  --mini-month-name: #555;
+  --mini-month-current: #d94040;
+  --mini-header: #aaa;
+  --mini-date: #444;
+  --mini-weekend: #999;
+  --mini-today-bg: #2979e6;
+  --mini-today-color: #fff;
+  --mini-hover: rgba(0, 0, 0, 0.03);
 }
 
 * {
@@ -265,4 +295,181 @@ body {
 
 .date-cell.current-week-end {
   border-radius: 0 6px 6px 0;
+}
+
+/* ── View Switcher ── */
+.view-switcher {
+  display: flex;
+  gap: 2px;
+  background: var(--view-switcher-bg);
+  border-radius: 8px;
+  padding: 2px;
+  margin-bottom: 12px;
+}
+
+.view-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--nav-color);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-btn:hover {
+  background: var(--view-btn-hover);
+}
+
+.view-btn.active {
+  background: var(--view-btn-active-bg);
+  color: var(--view-btn-active-color);
+}
+
+/* ── Week View ── */
+.week-view {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 8px 0;
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.week-day:hover {
+  background: var(--date-hover-bg);
+}
+
+.week-day-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--week-day-name);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.week-day.weekend .week-day-name {
+  color: var(--week-day-name-weekend);
+}
+
+.week-day.today .week-day-name {
+  color: var(--week-day-name-today);
+}
+
+.week-day-number {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--date-color);
+  transition: background 0.15s;
+}
+
+.week-day.weekend .week-day-number {
+  color: var(--weekend-color);
+}
+
+.week-day.today .week-day-number {
+  background: var(--today-bg);
+  color: var(--today-color);
+  font-weight: 600;
+}
+
+.week-day.selected .week-day-number {
+  background: var(--selected-bg);
+  color: var(--selected-color);
+}
+
+.week-day.selected.today .week-day-number {
+  background: var(--today-bg);
+  color: var(--today-color);
+}
+
+/* ── Year View ── */
+.year-view {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.mini-month {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.mini-month:hover {
+  background: var(--mini-hover);
+}
+
+.mini-month-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--mini-month-name);
+  text-align: center;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.mini-month-name.current {
+  color: var(--mini-month-current);
+}
+
+.mini-day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.mini-day-header {
+  font-size: 7px;
+  font-weight: 600;
+  color: var(--mini-header);
+  text-align: center;
+  line-height: 10px;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.mini-date {
+  font-size: 8px;
+  text-align: center;
+  color: var(--mini-date);
+  line-height: 13px;
+}
+
+.mini-date.weekend {
+  color: var(--mini-weekend);
+}
+
+.mini-date.today {
+  background: var(--mini-today-bg);
+  color: var(--mini-today-color);
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.mini-date.empty {
+  visibility: hidden;
 }

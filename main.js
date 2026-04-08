@@ -25,7 +25,7 @@ app.on('ready', () => {
   // Create hidden browser window
   win = new BrowserWindow({
     width: 360,
-    height: 345,
+    height: 380,
     show: false,
     frame: false,
     resizable: false,
@@ -52,6 +52,18 @@ app.on('ready', () => {
   ipcMain.on('theme-updated', (_e, theme) => {
     currentTheme = theme;
     nativeTheme.themeSource = theme;
+  });
+
+  // Resize window when view changes
+  const VIEW_SIZES = {
+    week:  { width: 360, height: 215 },
+    month: { width: 360, height: 380 },
+    year:  { width: 360, height: 460 },
+  };
+  ipcMain.on('view-changed', (_e, view) => {
+    const size = VIEW_SIZES[view] || VIEW_SIZES.month;
+    win.setSize(size.width, size.height);
+    positionWindow();
   });
 
   // Hide instead of close

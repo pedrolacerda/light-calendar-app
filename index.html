@@ -14,13 +14,20 @@
         <span class="year" id="yearNumber"></span>
       </div>
       <div class="nav-buttons">
-        <button class="nav-btn" id="prevMonth" aria-label="Previous month">‹</button>
-        <button class="nav-btn" id="nextMonth" aria-label="Next month">›</button>
+        <button class="nav-btn" id="prevMonth" aria-label="Previous">‹</button>
+        <button class="nav-btn" id="nextMonth" aria-label="Next">›</button>
         <button class="nav-btn theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
       </div>
     </header>
+    <div class="view-switcher">
+      <button class="view-btn" data-view="week">Week</button>
+      <button class="view-btn active" data-view="month">Month</button>
+      <button class="view-btn" data-view="year">Year</button>
+    </div>
     <div class="day-headers" id="dayHeaders"></div>
     <div class="date-grid" id="dateGrid"></div>
+    <div class="week-view" id="weekView" style="display:none"></div>
+    <div class="year-view" id="yearView" style="display:none"></div>
   </div>
   <script src="renderer.js"></script>
 </body>
