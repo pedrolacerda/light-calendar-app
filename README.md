@@ -50,9 +50,38 @@ light-calendar-app/
 ├── renderer.js      # Calendar rendering logic
 ├── styles.css       # Dark theme styles
 ├── assets/
+│   ├── icon.icns    # macOS app icon
+│   ├── icon.png     # Source icon (1024×1024)
 │   └── tray-icon*   # macOS Template tray icons (1x + 2x)
 └── package.json
 ```
+
+## Building for Distribution
+
+Build the `.app` bundle and a distributable `.zip`:
+
+```bash
+npm run build
+```
+
+Output goes to `dist/`:
+- `dist/mac-arm64/Light Calendar.app` — the standalone app
+- `dist/Light Calendar-*-mac.zip` — zipped app for distribution
+
+### Creating a DMG installer
+
+```bash
+npm run build:dmg
+```
+
+This builds the app and wraps it in a `.dmg` disk image at `dist/Light Calendar.dmg`.
+
+### Installing the built app
+
+1. Open the `.dmg` or unzip the `.zip`
+2. Drag **Light Calendar.app** into `/Applications`
+3. Launch it — the calendar icon appears in the menu bar
+4. The app has `LSUIElement` set, so it never shows in the Dock
 
 ## How It Works
 

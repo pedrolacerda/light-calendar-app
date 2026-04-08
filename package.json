@@ -6,7 +6,8 @@
   "scripts": {
     "start": "unset ELECTRON_RUN_AS_NODE && electron .",
     "dev": "unset ELECTRON_RUN_AS_NODE && ELECTRON_IS_DEV=1 electron . --enable-logging",
-    "build": "electron-builder --mac"
+    "build": "electron-builder --mac",
+    "build:dmg": "npm run build && hdiutil create -volname 'Light Calendar' -srcfolder 'dist/mac-arm64/Light Calendar.app' -ov -format UDZO 'dist/Light Calendar.dmg'"
   },
   "keywords": [
     "calendar",
@@ -28,7 +29,6 @@
       "category": "public.app-category.utilities",
       "icon": "assets/icon.icns",
       "target": [
-        "dmg",
         "zip"
       ],
       "extendInfo": {
